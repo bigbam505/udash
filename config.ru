@@ -1,4 +1,5 @@
 require 'dashing'
+require 'pry-remote'
 
 configure do
   set :auth_token, ENV['AUTH_TOKEN']
