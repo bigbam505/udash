@@ -3,6 +3,7 @@ require 'pry-remote'
 
 configure do
   set :auth_token, ENV['AUTH_TOKEN']
+  set :default_dashboard, 'work'
 
   helpers do
     def protected!
