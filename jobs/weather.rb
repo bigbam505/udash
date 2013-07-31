@@ -4,11 +4,12 @@ require_relative '../lib/weather_updater'
 
 # Get a WOEID (Where On Earth ID)
 # for your location from here:
-# http://woe_id.rosselliot.co.nz/
+# http://woeid.rosselliot.co.nz/
 
 # {city_name: 'Boston', woe_id: 12345}
 cities = []
 cities << {city: 'McLean', woe_id: 2448240}
+cities << {city: 'Arlington', woe_id: 12766856}
 
 SCHEDULER.every '15m', :first_in => 0 do |job|
   cities.each do |city|
