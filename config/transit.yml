@@ -1,0 +1,13 @@
+home:
+  origin: '1210 N Stuart St, Arlington VA 22201'
+  locations:
+    - name: 'Cvent'
+      address: '8180 Greensboro Dr, McLean VA 22102'
+      mode: 'driving'
+work:
+  origin: '8180 Greensboro Dr, McLean VA 22102'
+  locations:
+    - name: 'Stuart'
+      address: '1210 N Stuart St, Arlington VA 22201'
+      mode: 'driving'
+
