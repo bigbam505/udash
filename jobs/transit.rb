@@ -39,6 +39,10 @@ class MapRoute
   private
   attr_reader :json_response
 
+  def departure_time
+    DateTime.now.strftime('%s')
+  end
+
   def json_response
     @json_response ||= lookup_server_response
   end
@@ -55,7 +59,7 @@ class MapRoute
   end
 
   def api_url
-    "https://maps.googleapis.com/maps/api/directions/json?origin=#{origin}&destination=#{destination}&sensor=false&mode=#{mode}&departure_time=1370828582"
+    "https://maps.googleapis.com/maps/api/directions/json?origin=#{origin}&destination=#{destination}&sensor=false&mode=#{mode}&departure_time=#{departure_time}"
   end
 end
 
