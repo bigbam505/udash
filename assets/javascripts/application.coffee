@@ -7,12 +7,26 @@
 
 console.log("Yeah! The dashboard has started!")
 
+
+Dashing.currentDashboard = ->
+  location.pathname.replace('/','')
+
+storageName = ->
+  "dashing-"+Dashing.currentDashboard()
+
+Dashing.loadSavedGridsterLayout = ->
+  if localStorage.hasOwnProperty(storageName())
+    Dashing.gridsterLayout(localStorage[storageName()])
+
 Dashing.on 'ready', ->
   Dashing.widget_margins ||= [5, 5]
   Dashing.widget_base_dimensions ||= [300, 360]
   Dashing.numColumns ||= 4
 
   contentWidth = (Dashing.widget_base_dimensions[0] + Dashing.widget_margins[0] * 2) * Dashing.numColumns
+
+  Dashing.showGridsterInstructions = ->
+    localStorage[storageName()] = JSON.stringify(Dashing.getWidgetPositions())
 
   Batman.setImmediate ->
     $('.gridster').width(contentWidth)
