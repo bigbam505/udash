@@ -1,0 +1,12 @@
+<h1 class="title" data-bind="title"></h1>
+
+<li>
+<li data-foreach-result="results">
+<span data-bind="result.name"></span> - <span class="drive-time" data-bind="result.time"></span>
+</li>
+</li>
+
+
+<p class="more-info" data-bind="moreinfo | raw"></p>
+
+<p class="updated-at" data-bind="updatedAtMessage"></p>
