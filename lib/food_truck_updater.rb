@@ -60,7 +60,7 @@ class FoodTruckUpdater
   end
 
   def truck_in_area?(truck)
-    delta = 0.001
+    delta = 0.01
     (truck.long - long).abs < delta && (truck.lat - lat).abs < delta
   end
 
