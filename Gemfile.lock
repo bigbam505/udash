@@ -24,7 +24,10 @@ GEM
     hike (1.2.3)
     json (1.7.7)
     method_source (0.8.1)
+    mini_portile (0.5.1)
     multi_json (1.7.6)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -72,6 +75,7 @@ PLATFORMS
 DEPENDENCIES
   dashing
   json
+  nokogiri
   pry
   pry-remote
   xml-simple
