@@ -86,7 +86,7 @@ class FoodSpecialUpdater
   end
 end
 
-SCHEDULER.every '1m', :first_in => 0 do |job|
+SCHEDULER.every '30m', :first_in => 0 do |job|
   FoodSpecialUpdater.new.update
 end
 
