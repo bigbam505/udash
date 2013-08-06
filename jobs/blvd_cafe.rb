@@ -1,7 +1,8 @@
 require 'net/http'
-require 'json'
 require 'nokogiri'
+
 class FoodSpecialParser
+
   def parse
     parse_specials_list(document.css('ul.fl_food_menu_items')[1])
   end
@@ -31,11 +32,12 @@ class FoodSpecialParser
   end
 
   def response_body
-    if(@response_body)
-      return @response_body
+    unless(@response_body)
+      http = Net::HTTP.new('www.blvdcafecatering.com')
+      @response_body = http.request(Net::HTTP::Get.new('/category/dailyspecials')).body
     end
-    http = Net::HTTP.new('www.blvdcafecatering.com')
-    @response_body = http.request(Net::HTTP::Get.new('/category/dailyspecials')).body
+
+    @response_body
   end
 end
 
