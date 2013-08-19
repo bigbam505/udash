@@ -10,10 +10,14 @@ class FoodSpecialParser
   private
 
   def parse_special(list_item)
-    title = list_item.css('span.fl_food_menu_item_name')[0].content
-    description = list_item.css('span.fl_food_menu_item_description')[0].content
-    price = list_item.css('span.fl_food_menu_item_price')[0].content
-    FoodSpecial.new(title, description, price )
+    title = clean_text(list_item.css('span.fl_food_menu_item_name')[0].content)
+    description = clean_text(list_item.css('span.fl_food_menu_item_description')[0].content)
+    price = clean_text(list_item.css('span.fl_food_menu_item_price')[0].content)
+    FoodSpecial.new(title, description, price)
+  end
+
+  def clean_text(text)
+    text.gsub('*','').strip
   end
 
   def parse_specials_list(list)
