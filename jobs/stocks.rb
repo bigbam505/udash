@@ -13,59 +13,36 @@ require 'csv'
 # Config
 # ------
 # Symbols of all indizes you want to track
-yahoo_stockquote_symbols = [
+stockquote_symbols = [
   'CVT'      # will become `yahoo_stock_quote_cvt`
 ]
 
-SCHEDULER.every '30s', :first_in => 0 do |job|
-  
-  s = yahoo_stockquote_symbols.join(',').upcase
-  http = Net::HTTP.new("download.finance.yahoo.com")
-  response = http.request(Net::HTTP::Get.new("/d/quotes.csv?fb=nsac1&s=#{s}"))
-  
-  if response.code != "200"
-    puts "yahoo stock quote communication error (status-code: #{response.code})\n#{response.body}"
-  else
-    # read data from csv
-    data = CSV.parse(response.body)
+SCHEDULER.every '5m', :first_in => 0 do |job|
+  stockquote_symbols.each do |symbol|
+    http = Net::HTTP.new("dev.markitondemand.com")
+    response = http.request(Net::HTTP::Get.new("/Api/v2/Quote/json?symbol=#{symbol}"))
 
-    stocklist = Array.new
+    if response.code != "200"
+      puts "Quote communication error (status-code: #{response.code})\n#{response.body}"
+    else
+      data = JSON.parse(response.body)
 
-    # iterate over different stock symbols and create
-    # the list and single values to be pushed to the frontend
-    data.each do |line|
-      name = line[0]
-      symbol = line[1]
-      current = line[2].to_f
-      change = line[3].to_f
+      symbol = data['Symbol']
+      current = data['LastPrice'].to_f
+      change = data['Change'].to_f
 
-      # add data to list
-      stocklist.push({
-        label: name,
-        value: current.round(2)
-      })
-
-      # send single value and change to dashboard
-      widgetVarname = "yahoo_stock_quote_" + symbol.gsub(/[^A-Za-z0-9]+/, '_').downcase
+      widgetVarname = "stock_quote_" + symbol.gsub(/[^A-Za-z0-9]+/, '_').downcase
       widgetData = {
         current: current
       }
+
       if change != 0.0
-        widgetData[:last] = current + change
+        widgetData[:last] = current - change
       end
+
       if defined?(send_event)
         send_event(widgetVarname, widgetData)
-      else
-        print "current: #{symbol} #{current} #{change} #{widgetVarname}\n"
       end
     end
-
-    # send list to dashboard
-    if defined?(send_event)
-      send_event('yahoo_stock_quote_list', { items: stocklist })
-    else
-      print stocklist
-    end
- 
   end
 end
