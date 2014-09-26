@@ -17,9 +17,8 @@ stockquote_symbols = [
   'CVT'      # will become `yahoo_stock_quote_cvt`
 ]
 
-SCHEDULER.every '5m', :first_in => 0 do |job|
+SCHEDULER.every '1h', :first_in => 0 do |job|
   stockquote_symbols.each do |symbol|
-=begin
     http = Net::HTTP.new("dev.markitondemand.com")
     response = http.request(Net::HTTP::Get.new("/Api/v2/Quote/json?symbol=#{symbol}"))
 
@@ -45,6 +44,5 @@ SCHEDULER.every '5m', :first_in => 0 do |job|
         send_event(widgetVarname, widgetData)
       end
     end
-=end
   end
 end
